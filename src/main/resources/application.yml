@@ -1,0 +1,15 @@
+server:
+  servlet:
+    context-path: /api/v1
+  port: 9191
+
+spring:
+  application:
+    name: auth-server
+  jpa:
+    show-sql: true
+    data:
+      web:
+        pageable:
+          page-parameter: p
+          size-parameter: limit
