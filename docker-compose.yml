@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres-service
+    image: postgres:16.1
+    command: postgres -c 'max_connections=200'
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${PGS_USER}
+      POSTGRES_PASSWORD: ${PGS_PASSWORD}
+      POSTGRES_DB: ${PGS_DB}
+      PGDATA: /tmp
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: "exit 0"
+    networks:
+      - postgres-network
+
+  pgadmin:
+    container_name: pgadmin-service
+    image: dpage/pgadmin4:8.9
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGA_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGA_PASSWORD}
+    ports:
+      - 8080:80
+    depends_on:
+      - postgres
+    networks:
+      - postgres-network
+
+volumes:
+  postgres-data:
+    driver: local
+
+networks:
+  postgres-network:
+    driver: bridge
