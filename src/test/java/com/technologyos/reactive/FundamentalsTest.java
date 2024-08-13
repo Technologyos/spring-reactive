@@ -8,6 +8,6 @@ class FundamentalsTest {
 
     @Test
     public void validate_flux(){
-        Fundamentals.fluxExample();
+        Fundamentals.fluxMonoExamples();
     }
 }
