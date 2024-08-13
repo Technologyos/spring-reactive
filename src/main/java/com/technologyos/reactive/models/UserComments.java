@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
-    private String name;
-    private String lastname;
+@ToString
+public class UserComments {
+    private Customer customer;
+    private Comment comment;
 }
