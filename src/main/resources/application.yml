@@ -13,3 +13,10 @@ spring:
         pageable:
           page-parameter: p
           size-parameter: limit
+  data:
+    mongodb:
+      uri: mongodb://space:Temporal123@localhost:27018/catalogue?authSource=admin&authMechanism=SCRAM-SHA-256
+  thymeleaf:
+    reactive:
+      max-chunk-size: 1024
+      chunked-mode-view-names: display-chunked,*chunked*

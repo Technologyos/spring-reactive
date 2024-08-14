@@ -1,43 +1,19 @@
 version: '3.8'
 
 services:
-  postgres:
-    container_name: postgres-service
-    image: postgres:16.1
-    command: postgres -c 'max_connections=200'
-    restart: always
-    ports:
-      - 5432:5432
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb_container
     environment:
-      POSTGRES_USER: ${PGS_USER}
-      POSTGRES_PASSWORD: ${PGS_PASSWORD}
-      POSTGRES_DB: ${PGS_DB}
-      PGDATA: /tmp
+      MONGO_INITDB_ROOT_USERNAME: space
+      MONGO_INITDB_ROOT_PASSWORD: Temporal123
+      MONGO_INITDB_DATABASE: catalogue
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-    healthcheck:
-      test: "exit 0"
-    networks:
-      - postgres-network
-
-  pgadmin:
-    container_name: pgadmin-service
-    image: dpage/pgadmin4:8.9
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGA_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGA_PASSWORD}
+      - mongodb_data:/data/db
     ports:
-      - 8080:80
-    depends_on:
-      - postgres
-    networks:
-      - postgres-network
+      - "27018:27017"
+    restart: unless-stopped
 
 volumes:
-  postgres-data:
+  mongodb_data:
     driver: local
-
-networks:
-  postgres-network:
-    driver: bridge
